@@ -49,9 +49,13 @@ dependencies {
     // annotationProcessor는ㅇ : gradle 버전이 올라감에 따라 롬복설정이 변하였기에 설정해준다.
     annotationProcessor("org.projectlombok:lombok")
     compile('org.projectlombok:lombok')
+
+    // mysql
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.15'
 }
 // id 'com.palantir.docker' 플러그인을 추가하면 반드시 docker{}를 명시해줘야 빌드테스트 오류가 나지 않는다.
 // id "com.palantir.docker-run" 도 마찬가지로 dockerRun{}을 명시해줘야 한다.
+// docker 설치 후 /var/run/docker.sock의 permission denied 발생하는 경우 : "sudo chmod 666 /var/run/docker.sock" 명령어를 실행해줘야 한다.
 docker {
     println("gradle docker-plugin start = spring-example:${project.version}")
     name "spring-example:${project.version}"

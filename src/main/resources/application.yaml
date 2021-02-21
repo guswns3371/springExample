@@ -1,0 +1,21 @@
+server:
+  port: 80
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://db:3306/testdb?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8
+    username: root
+    password: wnsgusgk3537
+
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: update
+        show-sql: true
+        format-sql: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: true
+    open-in-view: false
+  session:
+    store-type: jdbc
