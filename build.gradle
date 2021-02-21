@@ -53,8 +53,8 @@ dependencies {
 // id 'com.palantir.docker' 플러그인을 추가하면 반드시 docker{}를 명시해줘야 빌드테스트 오류가 나지 않는다.
 // id "com.palantir.docker-run" 도 마찬가지로 dockerRun{}을 명시해줘야 한다.
 docker {
-    println("gradle docker-plugin start = ${project.name}:${project.version}")
-    name "${project.name}:${project.version}"
+    println("gradle docker-plugin start = spring-example:${project.version}")
+    name "spring-example:${project.version}"
     files tasks.bootJar.outputs.files
     // 도커에서 repository이름은 반드시 소문자이여야 하므로 springExample이 아닌 spring-example이여야한다.
     tag 'DockerHub', "guswns3371/spring-example:${project.version}"
