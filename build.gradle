@@ -12,10 +12,17 @@ buildscript {
     }
 }
 
-apply plugin : 'java'
-apply plugin : 'eclipse'
-apply plugin : 'org.springframework.boot'
-apply plugin : 'io.spring.dependency-management'
+plugins {
+    // 플러그인의 버젼을 명시해줘야 한다.
+    id 'org.springframework.boot' version '2.4.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'eclipse'
+
+    // jenkins 에서 ./gradlew docker 혹은 dockerRun 이라는 task 를 실행하기위해 필요한 플러그인들
+    id 'com.palantir.docker' version '0.25.0'
+    id "com.palantir.docker-run" version "0.22.1"
+}
 
 group 'org.example'
 version '1.0-SNAPSHOT'
@@ -40,4 +47,22 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+// id 'com.palantir.docker' 플러그인을 추가하면 반드시 docker{}를 명시해줘야 빌드테스트 오류가 나지 않는다.
+// id "com.palantir.docker-run" 도 마찬가지로 dockerRun{}을 명시해줘야 한다.
+docker {
+    println("gradle docker-plugin start")
+    name "${project.name}:${project.version}"
+    files tasks.bootJar.outputs.files
+    tag 'DockerHub', "guswns3371/gradle-docker-test:${project.version}"
+    buildArgs(['JAR_FILE': tasks.bootJar.outputs.files.singleFile.name])
+}
+
+dockerRun {
+    println("gradle dockerRun-plugin start")
+    name "${project.name}"
+    image "${project.name}:${project.version}"
+    ports '80:80'
+    clean true
 }
