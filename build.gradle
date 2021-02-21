@@ -56,7 +56,8 @@ docker {
     println("gradle docker-plugin start = ${project.name}:${project.version}")
     name "${project.name}:${project.version}"
     files tasks.bootJar.outputs.files
-    tag 'DockerHub', "guswns3371/${project.name}:${project.version}"
+    // 도커에서 repository이름은 반드시 소문자이여야 하므로 springExample이 아닌 spring-example이여야한다.
+    tag 'DockerHub', "guswns3371/spring-example:${project.version}"
     buildArgs(['JAR_FILE': tasks.bootJar.outputs.files.singleFile.name])
 }
 
