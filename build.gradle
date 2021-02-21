@@ -39,16 +39,17 @@ repositories {
 // 특정 버전을 명시하지 않아야만 맨위에 작성한 버전을 따라가게된다(springBootVersion)
 // 그레이들 변경시 import 해줘야 한다. (오른쪽 Gradle 탭에서 받은 의존성을 확인할 수 있다.)
 dependencies {
+    implementation 'junit:junit:4.12'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.springframework.boot:spring-boot-starter-test')
-}
 
-test {
-    useJUnitPlatform()
+    // lombok
+    // annotationProcessor는ㅇ : gradle 버전이 올라감에 따라 롬복설정이 변하였기에 설정해준다.
+    annotationProcessor("org.projectlombok:lombok")
+    compile('org.projectlombok:lombok')
 }
-
 // id 'com.palantir.docker' 플러그인을 추가하면 반드시 docker{}를 명시해줘야 빌드테스트 오류가 나지 않는다.
 // id "com.palantir.docker-run" 도 마찬가지로 dockerRun{}을 명시해줘야 한다.
 docker {
@@ -66,3 +67,8 @@ dockerRun {
     ports '80:80'
     clean true
 }
+
+test {
+    useJUnitPlatform()
+}
+
