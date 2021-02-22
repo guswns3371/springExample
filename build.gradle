@@ -46,7 +46,7 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
     // lombok
-    // annotationProcessor는ㅇ : gradle 버전이 올라감에 따라 롬복설정이 변하였기에 설정해준다.
+    // annotationProcessor : gradle 버전이 올라감에 따라 롬복설정이 변하였기에 설정해준다.
     annotationProcessor("org.projectlombok:lombok")
     compile('org.projectlombok:lombok')
 
