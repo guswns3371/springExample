@@ -26,3 +26,8 @@ spring:
     open-in-view: false
   session:
     store-type: jdbc
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
