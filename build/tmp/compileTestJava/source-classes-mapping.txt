@@ -2,3 +2,5 @@ com/example/springExample/web/dto/HelloResponseDtoTest.java
  com.example.springExample.web.dto.HelloResponseDtoTest
 com/example/springExample/web/HelloControllerTest.java
  com.example.springExample.web.HelloControllerTest
+com/example/springExample/web/domain/posts/PostsRepositoryTest.java
+ com.example.springExample.web.domain.posts.PostsRepositoryTest
