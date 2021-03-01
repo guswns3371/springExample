@@ -1,4 +1,4 @@
-package com.example.springExample;
+package com.example.springExample.web;
 
 import com.example.springExample.service.posts.PostsService;
 import com.example.springExample.web.dto.PostSaveRequestDto;

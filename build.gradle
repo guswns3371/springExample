@@ -62,6 +62,9 @@ dependencies {
     // spring data JPA
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('com.h2database:h2')
+
+    // mustache
+    compile('org.springframework.boot:spring-boot-starter-mustache')
 }
 // id 'com.palantir.docker' 플러그인을 추가하면 반드시 docker{}를 명시해줘야 빌드테스트 오류가 나지 않는다.
 // id "com.palantir.docker-run" 도 마찬가지로 dockerRun{}을 명시해줘야 한다.
