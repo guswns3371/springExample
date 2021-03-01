@@ -38,7 +38,7 @@ public class PostsService {
     @Transactional
     public Long update(Long id, PostsUpdateRequestDto requestDto) {
         Posts posts = postsRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id="+id));
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
 
         // 더티 체킹 : 엔티티 객체의 값만 변경하면 별도로 update 쿼리를 날릴 필요가 없다.
         posts.update(requestDto.getTitle(), requestDto.getContent());
@@ -49,7 +49,7 @@ public class PostsService {
     @Transactional
     public PostsResponseDto findById(Long id) {
         Posts entity = postsRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id="+id));
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
 
         return new PostsResponseDto(entity);
     }
@@ -65,5 +65,13 @@ public class PostsService {
                 // .map(PostsListResponseDto::new) 는 .map(posts -> new PostsListResponseDto(posts))와 같은 의미이다.
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Posts posts = postsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
+        postsRepository.delete(posts);
     }
 }
