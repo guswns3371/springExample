@@ -2,7 +2,7 @@ var main = {
     init: function () {
         var _this = this;
         $('#btn-save').on('click', function () {
-            _this.save()
+            _this.save();
         });
     },
     save: function () {
@@ -25,6 +25,7 @@ var main = {
             alert(JSON.stringify(err));
         })
     }
+
 };
 
 main.init();
