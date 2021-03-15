@@ -10,9 +10,12 @@ server:
 # test 할 경우 : datasource 부분을 모두 주석처리 할 것 (내장 H2 DB 사용하기 때문)
 
 spring:
+  profiles:
+    include: oauth
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://db:3306/spring_example?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/spring_example?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8
     username: root
     password: wnsgusgk3537
 
@@ -25,8 +28,13 @@ spring:
     show-sql: true
     generate-ddl: true
     open-in-view: false
+
   session:
     store-type: jdbc
+    # spring.session.jdbc.initialize-schema: always 설정이 있어야만 JPA 가 자동으로 세션 저장용 테이블을 생성한다.
+    jdbc:
+      initialize-schema: always
+
   http:
     encoding:
       charset: UTF-8

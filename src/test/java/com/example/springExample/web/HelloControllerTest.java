@@ -1,9 +1,13 @@
 package com.example.springExample.web;
 
+import com.example.springExample.config.auth.SecurityConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -22,7 +26,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // @WebMvcTest
 //  여러가지의 스프링 테스트 어노테이션 중에서 Web(Spring Mvc)에 집중할 수 있는 어노테이션이다.
 //  @Controller,@ControllerAdvice를 사용할 수 있다.
-@WebMvcTest(controllers = HelloController.class)
+/**
+ * @WebMvcTest는 CustomOAuth2UserService를 스캔하지 않는다.
+ * @WebMvcTest는 WebSecurityConfigurerAdapter, WebMvcConfigurer 를 비롯한
+ *  @ControllerAdvice, @Controller 를 읽지만
+ *  @Repository, @Service, @Component는 스캔 대상이 아니므로 읽지 않는다.
+ * 정리하면 WebSecurityConfigurerAdapter를 implements하는 SecurityConfig 클래스의 CustomOAuth2UserService를 읽지 못한다는 의미이다.
+ * 이 문제를 해결하기 위해서 @WebMvcTest의 스캔 대상에서 SecurityConfig를 제거해야한다.
+ * */
+@WebMvcTest(controllers = HelloController.class,
+        excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+        }
+)
 public class HelloControllerTest {
 
     // @Autowired
@@ -33,6 +49,7 @@ public class HelloControllerTest {
     private MockMvc mvc;
 
     @Test
+    @WithMockUser(roles = "USER")
     public void hello가_리턴된다() throws Exception {
         String hello = "hello";
 
@@ -48,6 +65,7 @@ public class HelloControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void helloDto가_리턴된다() throws Exception {
         String name = "hello";
         int amount = 1000;

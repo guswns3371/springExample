@@ -46,6 +46,7 @@ repositories {
 // 그레이들 변경시 import 해줘야 한다. (오른쪽 Gradle 탭에서 받은 의존성을 확인할 수 있다.)
 dependencies {
     implementation 'junit:junit:4.12'
+    implementation 'org.projectlombok:lombok:1.18.16'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     compile('org.springframework.boot:spring-boot-starter-web')
@@ -65,10 +66,23 @@ dependencies {
 
     // mustache
     compile('org.springframework.boot:spring-boot-starter-mustache')
+
+    // oauth2
+    compile('org.springframework.boot:spring-boot-starter-oauth2-client')
+
+    // JPA 가 자동으로 세션 저장용 테이블을 생성하도록 하기위한 의존성
+    compile('org.springframework.session:spring-session-jdbc')
+
+    // 스프링 시큐리티 테스트를 위한 여러 도구를 지원하는 의존성
+    testCompile('org.springframework.security:spring-security-test')
+//    compile('org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure')
 }
-// id 'com.palantir.docker' 플러그인을 추가하면 반드시 docker{}를 명시해줘야 빌드테스트 오류가 나지 않는다.
-// id "com.palantir.docker-run" 도 마찬가지로 dockerRun{}을 명시해줘야 한다.
-// docker 설치 후 /var/run/docker.sock 의 permission denied 발생하는 경우 : "sudo chmod 666 /var/run/docker.sock" 명령어를 실행해줘야 한다.
+
+/***
+ * id 'com.palantir.docker' 플러그인을 추가하면 반드시 docker{}를 명시해줘야 빌드테스트 오류가 나지 않는다.
+ * id "com.palantir.docker-run" 도 마찬가지로 dockerRun{}을 명시해줘야 한다.
+ * docker 설치 후 /var/run/docker.sock 의 permission denied 발생하는 경우 : "sudo chmod 666 /var/run/docker.sock" 명령어를 실행해줘야 한다.
+ */
 docker {
     println("gradle docker-plugin start = spring-example:${project.version}")
     name "spring-example:${project.version}"
@@ -86,7 +100,8 @@ dockerRun {
     clean true
 }
 
-test {
-    useJUnitPlatform()
-}
-
+// 해당 코드가 존재하면 JUnit Jupiter initializedError가 발생한다.
+//test {
+//    useJUnitPlatform()
+//}
+// b5 e9 ed
